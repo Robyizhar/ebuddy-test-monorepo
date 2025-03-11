@@ -20,5 +20,9 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "firebase": "^9.23.0",
+    "googleapis": "^146.0.0"
+  }
 }
