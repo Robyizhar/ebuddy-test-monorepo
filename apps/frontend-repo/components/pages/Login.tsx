@@ -1,106 +1,38 @@
 'use client';
-import React, { useState } from 'react';
-import { TextField, Button, Typography, Box } from '@mui/material';
+import React, { useState } from "react";
+import { Container, Box, Typography } from "@mui/material";
+import OrgLoginForm from "@/components/organisms/OrgLoginForm";
 
-const Login: React.FC = () => {
-const [inputValue1, setInputValue1] = useState<string>('');
-const [inputValue2, setInputValue2] = useState<string>('');
-const [error, setError] = useState<string>('');
-const [result, setResult] = useState<string>('');
+const LoginPage: React.FC = () => {
+    const [email, setEmail] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-
-        if (Number(inputValue1) > 5 && Number(inputValue2) > 5) {
-            setResult('Kondisi terpenuhi: Kedua input lebih besar dari 5');
-            setError('');
-        } else {
-            setError('Kondisi tidak terpenuhi: Pastikan kedua input lebih besar dari 5');
-            setResult('');
-        }
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        console.log("Email:", email, "Password:", password);
     };
 
     return (
-        <Box className="flex justify-center items-center h-screen">
+        <Container maxWidth="xs">
             <Box
-                className="p-8 rounded-lg shadow-lg w-80 bg-white"
-                component="form"
-                noValidate
-                autoComplete="off"
+                sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    mt: 8,
+                    p: 3,
+                    boxShadow: 3,
+                    borderRadius: 2,
+                    bgcolor: "background.paper",
+                }}
             >
-                <Typography variant="h5" gutterBottom>
-                Login
+                <Typography variant="h5" component="h1" gutterBottom>
+                    Login
                 </Typography>
-                <TextField
-                label="Email"
-                variant="outlined"
-                fullWidth
-                className="mb-4"
-                />
-                <TextField
-                label="Password"
-                type="password"
-                variant="outlined"
-                fullWidth
-                className="mb-4"
-                />
-                <Button
-                variant="contained"
-                color="primary"
-                fullWidth
-                className="mt-4"
-                >
-                Login
-                </Button>
+                <OrgLoginForm handleSubmit={handleSubmit} email={email} setEmail={setEmail} password={password} setPassword={setPassword} />
             </Box>
-        </Box>
+        </Container>
     );
-
-
-    // return (
-    //     <Box sx={{ maxWidth: 400, mx: 'auto', mt: 5 }}>
-    //     <Typography variant="h5" gutterBottom>
-    //         Formulir Logika Sederhana
-    //     </Typography>
-    //     <form onSubmit={handleSubmit}>
-    //         <TextField
-    //             label="Input 1"
-    //             variant="outlined"
-    //             fullWidth
-    //             value={inputValue1}
-    //             onChange={(e) => setInputValue1(e.target.value)}
-    //             margin="normal"
-    //             type="number"
-    //         />
-    //         <TextField
-    //             label="Input 2"
-    //             variant="outlined"
-    //             fullWidth
-    //             value={inputValue2}
-    //             onChange={(e) => setInputValue2(e.target.value)}
-    //             margin="normal"
-    //             type="number"
-    //         />
-    //         <Box sx={{ mt: 2 }}>
-    //             <Button variant="contained" color="primary" type="submit" fullWidth>
-    //                 Submit
-    //             </Button>
-    //         </Box>
-    //     </form>
-
-    //     {error && (
-    //         <Typography color="error" variant="body2" sx={{ mt: 2 }}>
-    //         {error}
-    //         </Typography>
-    //     )}
-
-    //     {result && (
-    //         <Typography color="primary" variant="body2" sx={{ mt: 2 }}>
-    //         {result}
-    //         </Typography>
-    //     )}
-    //     </Box>
-    // );
 };
 
-export default Login;
+export default LoginPage;
