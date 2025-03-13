@@ -36,3 +36,4 @@ yarn-error.log*
 # Misc
 .DS_Store
 *.pem
+apps/backend-repo/e-buddy-test-91b01-firebase-adminsdk-*.json
