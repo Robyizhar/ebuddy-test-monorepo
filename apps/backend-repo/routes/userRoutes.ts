@@ -2,9 +2,9 @@ import { Router } from "express";
 import { updateUserData, fetchUserData } from "../controller/api";
 import authMiddleware from "../middleware/authMiddleware";
 
-const router = Router();
+const userRoutes = Router();
 
-router.post("/update--user-data", authMiddleware, updateUserData);
-router.get("/fetch-user-data", authMiddleware, fetchUserData);
+userRoutes.post("/update--user-data", authMiddleware, updateUserData);
+userRoutes.get("/fetch-user-data", authMiddleware, fetchUserData);
 
-export default router;
+export default userRoutes;
