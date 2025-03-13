@@ -8,7 +8,7 @@ export interface AuthRequest extends Request {
 const authMiddleware = async (req: AuthRequest, res: Response, next: NextFunction) => {
     // const token = req.headers.authorization;
     const token = req.headers.authorization?.split(" ")[1];
-    console.log(token);
+    console.log('token');
     
     if (!token) {
         res.status(403).json({ message: "Unauthorized" });

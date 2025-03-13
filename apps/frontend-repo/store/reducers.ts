@@ -1,6 +1,6 @@
 import { createReducer } from "@reduxjs/toolkit";
 import { setUsers, updateUserAction } from "./actions";
-import User from "../apis/user";
+import User from "../apis/user/user";
 
 export interface UserState { users: User[]; }
 
