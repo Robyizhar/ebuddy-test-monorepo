@@ -19,6 +19,7 @@ export const updateUserData = async (req: Request, res: Response): Promise<void>
 export const fetchUserData = async (req: Request, res: Response): Promise<void> => {
     try {
         const fireBase = await db.collection("USERS").get();
+        console.log(fireBase);
         if (fireBase.empty) {
             res.status(404).json({ message: "No users found" });
             return;

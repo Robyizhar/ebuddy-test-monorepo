@@ -6,9 +6,7 @@ export interface AuthRequest extends Request {
 }
 
 const authMiddleware = async (req: AuthRequest, res: Response, next: NextFunction) => {
-    // const token = req.headers.authorization;
     const token = req.headers.authorization?.split(" ")[1];
-    console.log('token');
     
     if (!token) {
         res.status(403).json({ message: "Unauthorized" });
@@ -17,6 +15,7 @@ const authMiddleware = async (req: AuthRequest, res: Response, next: NextFunctio
 
     try {
         req.user = await admin.auth().verifyIdToken(token);
+        console.log(req.user);
         next();
     } catch (error) {
         res.status(403).json({ message: "Invalid token" });
