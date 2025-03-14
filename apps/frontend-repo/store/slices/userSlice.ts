@@ -35,7 +35,7 @@ export const updateUserActivity = createAsyncThunk("user/updateActivity", async 
         if ("error" in response) {
             return rejectWithValue(response.error);
         }
-        return { userId, recentlyActive: response.data };
+        return response.data;
     } catch (error: any) {
         return rejectWithValue(error.message);
     }

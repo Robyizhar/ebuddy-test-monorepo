@@ -1,6 +1,6 @@
 'use client'
 import React from "react";
-import {AtInputField} from "@/components/atoms/AtInputField"; // Pastikan InputField sudah diimpor
+import {AtInputField} from "@/components/atoms/AtInputField";
 
 interface MolLoginFormFieldsProps {
     email: string;

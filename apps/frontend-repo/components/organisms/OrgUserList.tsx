@@ -5,12 +5,20 @@ import { RootState, AppDispatch } from "@/store/store";
 import { fetchUser, updateUserActivity } from "@/store/slices/userSlice";
 import { Button, Box, Typography, CircularProgress, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const OrgUserList = () => {
     const dispatch = useDispatch<AppDispatch>();
     const { users, loading, error } = useSelector((state: RootState) => state.user);
     const router = useRouter();
     
+    const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
+    useEffect(() => {
+        if (!isAuthenticated) {
+            router.push("/login");
+        }
+    }, [isAuthenticated, router]);
+
     const handBackClick = () => {
         router.push("/");
     };
@@ -18,6 +26,8 @@ const OrgUserList = () => {
     const handleUpdateClick = (userId: string) => {
         dispatch(updateUserActivity(userId));
     };
+
+    console.log('users', users);
 
     const formatDate = (timestamp: number | null) => {
         if (timestamp !== null ) {
