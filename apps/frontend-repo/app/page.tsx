@@ -1,8 +1,32 @@
 'use client'
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
+import { AppDispatch, RootState } from "@/store/store";
+import { Container, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
+import { logout } from "@/store/slices/authSlice";
+import { InputButton } from "@/components/atoms/InputButton";
+
 
 export default function Home() {
+    const router = useRouter();
+    const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
+    const dispatch = useDispatch<AppDispatch>();
+
+    useEffect(() => {
+        if (!isAuthenticated) {
+            router.push("/login");
+        }
+    }, [isAuthenticated, router]);
+
+    const handleLogoutClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        dispatch(logout());
+    };
+    
+
     return (
         <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
             <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
@@ -15,9 +39,10 @@ export default function Home() {
                     priority
                 />
                 <div className="flex gap-4 items-center flex-col sm:flex-row">
-                    <Link href="/login" className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto" >
-                        Login Now
+                    <Link href="/users" className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto" >
+                        Users
                     </Link>
+                    <InputButton label="Logout" type="button" onClick={(e) => { handleLogoutClick(e) }} />
                 </div>
             </main>
             <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">

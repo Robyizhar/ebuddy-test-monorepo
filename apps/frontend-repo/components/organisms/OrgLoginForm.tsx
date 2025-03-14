@@ -13,7 +13,6 @@ interface OrgLoginFormProps {
 }
 
 const handleLoginClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    console.log("Login button clicked", event);
 };
 
 

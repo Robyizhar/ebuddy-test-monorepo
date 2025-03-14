@@ -1,5 +1,3 @@
-'use client'; // Tambahkan ini agar Redux Slice berjalan di client
-
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface AuthState {
