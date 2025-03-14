@@ -1,5 +1,5 @@
 export default interface User {
-    userId?: string;
+    userId: string;
     totalAverageWeightRatings: number;
     numberOfRents: number;
     recentlyActive: number | null; 

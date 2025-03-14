@@ -1,31 +1,43 @@
 "use client";
 
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { fetchUsers } from "@/apis/user/userApi";
+import { fetchUsers, updateUserActivityApi } from "@/apis/user/userApi";
+import User from "@/apis/user/user";
 
 interface UserState {
-    user: any | null;
+    users: User[] | [];
     loading: boolean;
     error: string | null;
 }
 
 const initialState: UserState = {
-    user: null,
+    users: [],
     loading: false,
     error: null,
 };
 
 export const fetchUser = createAsyncThunk("user/fetchUser", async (_, { rejectWithValue }) => {
     try {
-        const response = await fetchUsers();
-
+        const response = await fetchUsers();        
         if ("error" in response) {
             return rejectWithValue(response.error);
         }
 
-        return response;
+        return response.data;
     } catch (error: any) {
         return rejectWithValue(error.response?.data?.message || "Something went wrong!");
+    }
+});
+
+export const updateUserActivity = createAsyncThunk("user/updateActivity", async (userId: string, { rejectWithValue }) => {
+    try {
+        const response = await updateUserActivityApi(userId);
+        if ("error" in response) {
+            return rejectWithValue(response.error);
+        }
+        return { userId, recentlyActive: response.data };
+    } catch (error: any) {
+        return rejectWithValue(error.message);
     }
 });
 
@@ -34,7 +46,7 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         setUser: (state, action: PayloadAction<any>) => {
-            state.user = action.payload;
+            state.users = action.payload;
         },
     },
     extraReducers: (builder) => {
@@ -45,9 +57,20 @@ const userSlice = createSlice({
             })
             .addCase(fetchUser.fulfilled, (state, action: PayloadAction<any>) => {
                 state.loading = false;
-                state.user = action.payload;
+                state.users = action.payload;
             })
             .addCase(fetchUser.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload as string;
+            })
+            .addCase(updateUserActivity.fulfilled, (state, action: PayloadAction<any>) => {
+                state.loading = false;
+                state.users = action.payload;
+            })
+            .addCase(updateUserActivity.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(updateUserActivity.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload as string;
             });

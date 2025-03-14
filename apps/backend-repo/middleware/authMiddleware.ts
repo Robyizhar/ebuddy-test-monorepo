@@ -15,7 +15,6 @@ const authMiddleware = async (req: AuthRequest, res: Response, next: NextFunctio
 
     try {
         req.user = await admin.auth().verifyIdToken(token);
-        console.log(req.user);
         next();
     } catch (error) {
         res.status(403).json({ message: "Invalid token" });

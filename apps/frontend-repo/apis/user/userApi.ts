@@ -8,3 +8,11 @@ export const fetchUsers = async () => {
         return error.response?.data || { error: "Something went wrong!" };
     }
 };
+
+export const updateUserActivityApi = async (userId: string) => {
+    try {
+        return await api.post("/api/update-user-data", { userId });
+    } catch (error: any) {
+        return error.response?.data || { error: "Something went wrong!" };
+    }
+};
