@@ -43,12 +43,12 @@ export const updateRecentlyActive = async (req: Request, res: Response): Promise
 
         /* Calculate last activity time in seconds */
         const timestamp = Math.floor(Date.now() / 1000);
-        const lastActivityInDays = (timestamp - (userData.recentlyActive || timestamp)) / (60 * 60 * 24); /* Konversi ke hari */
+        const lastActivityInDays = (timestamp - (userData.recentlyActive || timestamp)) / (60 * 60 * 24); /* Convert to days */
 
         /* Normalize Value */
         const normalizedR = R / 5; 
         const normalizedN = Math.min(N / MAX_NUMBER_OF_RENTS, 1); /* Maksimum 1 */
-        const normalizedA = 1 - Math.min(lastActivityInDays / MAX_RECENT_ACTIVITY, 1); /* Lebih kecil lebih baik */
+        const normalizedA = 1 - Math.min(lastActivityInDays / MAX_RECENT_ACTIVITY, 1); /* Smaller is better */
 
         /* Count overallValue */
         const overallValue = (normalizedR * 0.5) + (normalizedN * 0.3) + (normalizedA * 0.2);
@@ -58,7 +58,6 @@ export const updateRecentlyActive = async (req: Request, res: Response): Promise
             recentlyActive: timestamp,
             overallValue
         });
-
 
         const fireBase = await db.collection("USERS").orderBy("overallValue", "desc").get();
         if (fireBase.empty) {

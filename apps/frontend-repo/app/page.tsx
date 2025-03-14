@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { AppDispatch, RootState } from "@/store/store";
-import { Container, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import { logout } from "@/store/slices/authSlice";

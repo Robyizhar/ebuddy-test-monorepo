@@ -1,4 +1,3 @@
-import User from "./user";
 import api from "@/utils/api";
 
 export const fetchUsers = async () => {
